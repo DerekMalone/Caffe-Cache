@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caffe-Cache", "Caffe-Cache\Caffe-Cache.csproj", "{F585E429-F036-4D01-BF8F-7E3F46A1137A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F585E429-F036-4D01-BF8F-7E3F46A1137A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F585E429-F036-4D01-BF8F-7E3F46A1137A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F585E429-F036-4D01-BF8F-7E3F46A1137A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F585E429-F036-4D01-BF8F-7E3F46A1137A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7ADE6788-26FB-4CD4-AAF8-E40006B489CE}
+	EndGlobalSection
+EndGlobal
