@@ -1,10 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Caffe_Cache.Models;
+using Caffe_Cache.Repositories;
 
 namespace Caffe_Cache.Controllers
 {
+        [Route("api/[controller]")]
+        [ApiController]
+
     public class CoffeeController : Controller
     {
+        private readonly ICoffeeRepository _coffeeRepository;
         // GET: CoffeeController
         public ActionResult Index()
         {

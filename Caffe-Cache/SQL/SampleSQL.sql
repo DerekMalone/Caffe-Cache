@@ -1,5 +1,8 @@
-﻿SELECT *
-FROM Coffee
+﻿SELECT c.*,
+		u.[Name] AS UserName
+FROM Coffee c
+LEFT JOIN [User] u ON c.UserId = u.UID
+WHERE UserId = '2345'
 
 SELECT *
 FROM Machine
