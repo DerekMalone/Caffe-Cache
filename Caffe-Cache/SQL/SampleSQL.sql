@@ -1,8 +1,6 @@
-﻿SELECT c.*,
-		u.[Name] AS UserName
-FROM Coffee c
-LEFT JOIN [User] u ON c.UserId = u.UID
-WHERE UserId = '2345'
+﻿SELECT *		
+FROM Coffee
+WHERE UserId = '1234'
 
 SELECT *
 FROM Machine
@@ -26,3 +24,9 @@ FROM Brew b
 LEFT JOIN [User] u ON b.UserId = u.UID
 LEFT JOIN Machine m ON b.MachineId = m.Id
 LEFT JOIN Coffee c ON b.CoffeeId = c.Id
+
+INSERT INTO Machine 
+([Name],
+UserId)
+OUTPUT INSERTED.ID
+VALUES ('French Press', '1234');

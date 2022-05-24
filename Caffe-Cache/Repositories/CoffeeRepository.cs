@@ -38,20 +38,18 @@ namespace Caffe_Cache.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        SELECT c.Id
-                                                c.Brand,
-                                                c.[Name] AS CoffeeName,
-                                                c.RoastType,
-                                                u.[Name] AS UserName
-                                        FROM Coffee c
-                                        LEFT JOIN [User] u ON c.UserId = u.UID
+                                        SELECT Id,
+                                               Brand,
+                                               [Name] AS CoffeeName,
+                                               RoastType
+                                        FROM Coffee
                                         WHERE UserId = @uid
                                         ";
                     cmd.Parameters.AddWithValue("@uid", uid);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        List<Coffee> list = new List<Coffee>();
+                        List<Coffee> coffees = new List<Coffee>();
                         while (reader.Read())
                         {
                             Coffee coffee = new Coffee
@@ -60,12 +58,11 @@ namespace Caffe_Cache.Repositories
                                 Brand = reader.GetString(reader.GetOrdinal("Brand")),
                                 Name = reader.GetString(reader.GetOrdinal("CoffeeName")),
                                 RoastType = reader.GetString(reader.GetOrdinal("RoastType")),
-                                /*Name = reader.GetString(reader.GetOrdinal("UserName"))*/
-                            };
 
-                            list.Add(coffee);
+                            };
+                            coffees.Add(coffee);
                         }
-                        return list;
+                        return coffees;
                     }
                 }
             }
@@ -73,7 +70,39 @@ namespace Caffe_Cache.Repositories
 
         public Coffee? GetCoffeeById(string uid, int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT Id,
+                                               Brand,
+                                               [Name] AS CoffeeName,
+                                               RoastType
+                                        FROM Coffee
+                                        WHERE UserId = @uid
+                                        ";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {                        
+                        if (reader.Read())
+                        {
+                            Coffee coffee = new Coffee
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Brand = reader.GetString(reader.GetOrdinal("Brand")),
+                                Name = reader.GetString(reader.GetOrdinal("CoffeeName")),
+                                RoastType = reader.GetString(reader.GetOrdinal("RoastType")),
+                            };                            
+                        return coffee;
+                        }
+                        else return null;
+                    }
+                }
+            }
         }
 
         public void UpdateCoffee(int id)

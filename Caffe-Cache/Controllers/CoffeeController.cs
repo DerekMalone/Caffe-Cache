@@ -5,85 +5,34 @@ using Caffe_Cache.Repositories;
 
 namespace Caffe_Cache.Controllers
 {
-        [Route("api/[controller]")]
+        [Route("[controller]")]
         [ApiController]
 
     public class CoffeeController : Controller
     {
         private readonly ICoffeeRepository _coffeeRepository;
-        // GET: CoffeeController
-        public ActionResult Index()
+
+        public CoffeeController(ICoffeeRepository coffeeRepository)
         {
-            return View();
+            _coffeeRepository = coffeeRepository;
+        }
+        
+        [HttpGet("{uid}")]
+        public IActionResult GetAllCoffee(string uid)
+        {
+            List<Coffee> coffees = _coffeeRepository.GetAllCoffee(uid);
+            if (coffees == null) return NotFound();
+            return Ok(coffees);
         }
 
-        // GET: CoffeeController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("{uid}/{id}")]
+        public IActionResult GetCoffeeById(string uid, int id)
         {
-            return View();
+            var coffee = _coffeeRepository.GetCoffeeById(uid, id);
+            if (coffee == null) return NotFound();
+            return Ok(coffee);
         }
 
-        // GET: CoffeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: CoffeeController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CoffeeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CoffeeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CoffeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CoffeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
