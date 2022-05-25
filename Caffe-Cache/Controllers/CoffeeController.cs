@@ -33,6 +33,47 @@ namespace Caffe_Cache.Controllers
             return Ok(coffee);
         }
 
+        [HttpPost]
+        public IActionResult AddCoffee([FromBody] Coffee newCoffee)
+        {
+            if (newCoffee== null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _coffeeRepository.AddCoffee(newCoffee);
+                return Ok(newCoffee);
+            }
+        }
 
+        [HttpPut("Edit/{uid}/{id}")]
+        public IActionResult UpdateCoffee(string uid, int id, [FromBody] Coffee coffeeObj)
+        {
+            try
+            {
+                _coffeeRepository.UpdateCoffee(uid, id, coffeeObj);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public IActionResult DeleteCoffee(int id)
+        {
+            try
+            {
+                _coffeeRepository.DeleteCoffee(id);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

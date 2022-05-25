@@ -5,9 +5,9 @@ namespace Caffe_Cache.Repositories
     public interface IBrewRepository
     {
         List<Brew> GetAllBrews(string uid);
-        Brew GetBrew(int id);
+        Brew GetBrewById(string uid, int id);
         void AddBrew(Brew brew);
-        void UpdateBrew(int id);
+        void UpdateBrew(string uid, int id, Brew brewObj);
         void DeleteBrew(int id);
 
         // Below is valid. Not sure if needed yet though.

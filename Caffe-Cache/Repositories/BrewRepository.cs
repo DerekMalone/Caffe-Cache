@@ -20,30 +20,217 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-
-        public void AddBrew(Brew brew)
+        public List<Brew> GetAllBrews(string uid)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                                [Name] AS BrewName,
+                                                GrindSize,
+                                                CoffeeWeight,
+                                                WaterVolume,
+                                                BrewTemp,
+                                                BrewDuration,
+                                                BrewInstructions,
+                                                UserId,
+                                                MachineId,
+                                                CoffeeId
+                                        FROM Brew
+                                        WHERE UserId = @uid
+                                        ";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Brew> list = new List<Brew>();
+                        while (reader.Read())
+                        {
+                            Brew brew = new Brew
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("BrewName")),
+                                GrindSize = reader.GetString(reader.GetOrdinal("GrindSize")),
+                                CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
+                                WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
+                                BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
+                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                                MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
+                                CoffeeId = reader.GetInt32(reader.GetOrdinal("CoffeeId")),
+                            };
+
+                            list.Add(brew);
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public Brew GetBrewById(string uid, int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                                [Name] AS BrewName,
+                                                GrindSize,
+                                                CoffeeWeight,
+                                                WaterVolume,
+                                                BrewTemp,
+                                                BrewDuration,
+                                                BrewInstructions,
+                                                UserId,
+                                                MachineId,
+                                                CoffeeId
+                                        FROM Brew
+                                        WHERE UserId = @uid AND Id = @id
+                                        ";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Brew brew = new Brew
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("BrewName")),
+                                GrindSize = reader.GetString(reader.GetOrdinal("GrindSize")),
+                                CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
+                                WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
+                                BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
+                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                                MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
+                                CoffeeId = reader.GetInt32(reader.GetOrdinal("CoffeeId")),
+                            };
+                            return brew;
+                        }
+                        else return null;
+                    }
+                }
+            }
+        }
+
+        public void AddBrew(Brew brewObj)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        INSERT INTO Brew (
+                                                            [Name],
+                                                            GrindSize,
+                                                            CoffeeWeight,
+                                                            WaterVolume,
+                                                            BrewTemp,
+                                                            BrewDuration,
+                                                            BrewInstructions,
+                                                            UserId,
+                                                            MachineId,
+                                                            CoffeeId
+                                                          )
+                                        OUTPUT INSERTED.ID
+                                        VALUES (
+                                                @name,
+                                                @grindSize,
+                                                @coffeeWeight,
+                                                @waterVolume,
+                                                @brewTemp,
+                                                @brewDuration,
+                                                @brewInstructions,
+                                                @userId,
+                                                @machineId,
+                                                @coffeeId
+                                                );
+                                        ";
+
+                    cmd.Parameters.AddWithValue("@name", brewObj.Name);
+                    cmd.Parameters.AddWithValue("@grindSize", brewObj.GrindSize);
+                    cmd.Parameters.AddWithValue("@coffeeWeight", brewObj.CoffeeWeight);
+                    cmd.Parameters.AddWithValue("@waterVolume", brewObj.WaterVolume);
+                    cmd.Parameters.AddWithValue("@brewTemp", brewObj.BrewTemp);
+                    cmd.Parameters.AddWithValue("@brewDuration", brewObj.BrewDuration);
+                    cmd.Parameters.AddWithValue("@brewInstructions", brewObj.BrewInstructions);
+                    cmd.Parameters.AddWithValue("@userId", brewObj.UserId);
+                    cmd.Parameters.AddWithValue("@machineId", brewObj.MachineId);
+                    cmd.Parameters.AddWithValue("@coffeeId", brewObj.CoffeeId);
+
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    brewObj.Id = id;
+                }
+            }
+        }
+
+
+        public void UpdateBrew(string uid, int id, Brew brewObj)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        UPDATE Brew                                            
+                                            SET [Name] = @name,
+                                                GrindSize = @grindSize,
+                                                CoffeeWeight = @coffeeWeight,
+                                                WaterVolume = @waterVolume,
+                                                BrewTemp = @brewTemp,
+                                                BrewDuration = @brewDuration,
+                                                BrewInstructions = @brewInstructions,
+                                                UserId = @uid,
+                                                MachineId = @machineId,
+                                                CoffeeId = @coffeeId
+                                        WHERE Id = @id AND UserId = @uid
+                                        ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@name", brewObj.Name);
+                    cmd.Parameters.AddWithValue("@grindSize", brewObj.GrindSize);
+                    cmd.Parameters.AddWithValue("@coffeeWeight", brewObj.CoffeeWeight);
+                    cmd.Parameters.AddWithValue("@waterVolume", brewObj.WaterVolume);
+                    cmd.Parameters.AddWithValue("@brewTemp", brewObj.BrewTemp);
+                    cmd.Parameters.AddWithValue("@brewDuration", brewObj.BrewDuration);
+                    cmd.Parameters.AddWithValue("@brewInstructions", brewObj.BrewInstructions);
+                    cmd.Parameters.AddWithValue("@userId", uid);
+                    cmd.Parameters.AddWithValue("@machineId", brewObj.MachineId);
+                    cmd.Parameters.AddWithValue("@coffeeId", brewObj.CoffeeId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void DeleteBrew(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE FROM Brew
+                                        WHERE Id = @id
+                                        ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
-        public List<Brew> GetAllBrews(string uid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Brew GetBrew(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateBrew(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

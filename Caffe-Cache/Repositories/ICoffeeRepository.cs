@@ -8,7 +8,7 @@ namespace Caffe_Cache.Repositories
         List<Coffee> GetAllCoffee(string uid);
         Coffee? GetCoffeeById(string uid, int id);
         void AddCoffee(Coffee coffee);
+        void UpdateCoffee(string uid, int id, Coffee coffeeObj);
         void DeleteCoffee(int id);
-        void UpdateCoffee(int id);
     }
 }

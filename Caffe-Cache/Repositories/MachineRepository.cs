@@ -20,6 +20,78 @@ namespace Caffe_Cache.Repositories
             }
         }
 
+
+        public List<Machine> GetAllMachines(string uid)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                               [Name] AS MachineName,
+                                               UserId
+                                        FROM Machine
+                                        WHERE UserId = @uid
+                                        ";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Machine> list = new List<Machine>();
+                        while (reader.Read())
+                        {
+                            Machine machine = new Machine
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),                                
+                                Name = reader.GetString(reader.GetOrdinal("MachineName")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                            };
+
+                            list.Add(machine);
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public Machine? GetMachineById(string uid, int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT Id,
+                                               [Name] AS MachineName,
+                                               UserId
+                                        FROM Machine
+                                        WHERE UserId = @uid AND Id = @id
+                                        ";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Machine machine = new Machine
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("MachineName")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                            };
+
+                            return machine;
+                        }
+                        else return null;
+                    }
+                }
+            }
+        }
+
         public void AddMachine(Machine machine)
         {
             using (SqlConnection conn = Connection)
@@ -44,45 +116,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public void DeleteMachine(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Machine> GetAllMachines(string uid)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"SELECT Id,
-                                               [Name] AS MachineName
-                                        FROM Machine
-                                        WHERE UserId = @uid
-                                        ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        List<Machine> list = new List<Machine>();
-                        while (reader.Read())
-                        {
-                            Machine machine = new Machine
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),                                
-                                Name = reader.GetString(reader.GetOrdinal("MachineName")),                                
-                            };
-
-                            list.Add(machine);
-                        }
-                        return list;
-                    }
-                }
-            }
-        }
-
-        public Machine? GetMachineById(string uid, int id)
+        public void UpdateMachine(string uid, int id, Machine machine)
         {
             using (SqlConnection conn = Connection)
             {
@@ -90,34 +124,37 @@ namespace Caffe_Cache.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        SELECT Id,
-                                               [Name] AS MachineName
-                                        FROM Machine
-                                        WHERE Id = @id
+                                        UPDATE Machine
+                                        SET [Name] = @name,
+                                            UserId = @uid
+                                        WHERE Id = @id AND UserId = @uid
                                         ";
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@name", machine.Name);
+                    cmd.Parameters.AddWithValue("@uid", uid);
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            Machine machine = new Machine
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("MachineName")),
-                            };
-
-                            return machine;
-                        }
-                        else return null;
-                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public void UpdateMachine(int id)
+        public void DeleteMachine(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE FROM Machine
+                                        WHERE Id = @id
+                                        ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
+
     }
 }

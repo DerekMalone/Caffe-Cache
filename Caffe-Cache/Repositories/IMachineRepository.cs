@@ -7,7 +7,7 @@ namespace Caffe_Cache.Repositories
         List<Machine> GetAllMachines(string uid);
         Machine? GetMachineById(string uid, int id);
         void AddMachine(Machine machine);
+        void UpdateMachine(string uid, int id, Machine machine);
         void DeleteMachine(int id);
-        void UpdateMachine(int id);
     }
 }

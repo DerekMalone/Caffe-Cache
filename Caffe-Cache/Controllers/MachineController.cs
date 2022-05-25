@@ -46,5 +46,34 @@ namespace Caffe_Cache.Controllers
                 return Ok(newMachine);
             }
         }
+
+        [HttpPut("Edit/{uid}/{id}")]
+        public IActionResult UpdateMachine(string uid, int id, [FromBody] Machine machineObj)
+        {
+            try
+            {
+                _machineRepo.UpdateMachine(uid, id, machineObj);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public IActionResult DeleteMachine(int id)
+        {
+            try
+            {
+                _machineRepo.DeleteMachine(id);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }
