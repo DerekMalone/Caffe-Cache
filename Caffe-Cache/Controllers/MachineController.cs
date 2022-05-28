@@ -1,82 +1,78 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Caffe_Cache.Models;
+using Caffe_Cache.Repositories;
 
 namespace Caffe_Cache.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
+
     public class MachineController : Controller
     {
-        // GET: MachineController
-        public ActionResult Index()
+        private readonly IMachineRepository _machineReposoitory;
+
+        public MachineController(IMachineRepository machineRepository)
         {
-            return View();
+            _machineReposoitory = machineRepository;
         }
 
-        // GET: MachineController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("{uid}")]
+        public IActionResult GetAllMachines(string uid)
         {
-            return View();
+            List<Machine> machines = _machineReposoitory.GetAllMachines(uid);
+            if (machines == null) return NotFound();
+            return Ok(machines);
         }
 
-        // GET: MachineController/Create
-        public ActionResult Create()
+        [HttpGet("Detail/{id}")]
+        public IActionResult GetMachineById(int id)
         {
-            return View();
+            var machine = _machineReposoitory.GetMachineById(id);
+            if (machine == null) return NotFound();
+            return Ok(machine);
         }
 
-        // POST: MachineController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult AddMachine([FromBody] Machine newMachine)
+        {
+            if (newMachine == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _machineReposoitory.AddMachine(newMachine);
+                return Ok(newMachine);
+            }
+        }
+
+        [HttpPut("Edit/{id}")]
+        public IActionResult UpdateMachine(int id, [FromBody] Machine machineObj)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _machineReposoitory.UpdateMachine(id, machineObj);
+
+                return Ok();
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return NotFound();
             }
         }
 
-        // GET: MachineController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MachineController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("Delete/{id}")]
+        public IActionResult DeleteMachine(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _machineReposoitory.DeleteMachine(id);
+                return Ok();
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: MachineController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MachineController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return BadRequest();
             }
         }
     }

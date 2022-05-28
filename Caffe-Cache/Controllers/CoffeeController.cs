@@ -1,82 +1,78 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Caffe_Cache.Models;
+using Caffe_Cache.Repositories;
 
 namespace Caffe_Cache.Controllers
 {
+        [Route("[controller]")]
+        [ApiController]
+
     public class CoffeeController : Controller
     {
-        // GET: CoffeeController
-        public ActionResult Index()
+        private readonly ICoffeeRepository _coffeeRepository;
+
+        public CoffeeController(ICoffeeRepository coffeeRepository)
         {
-            return View();
+            _coffeeRepository = coffeeRepository;
+        }
+        
+        [HttpGet("{uid}")]
+        public IActionResult GetAllCoffee(string uid)
+        {
+            List<Coffee> coffees = _coffeeRepository.GetAllCoffee(uid);
+            if (coffees == null) return NotFound();
+            return Ok(coffees);
         }
 
-        // GET: CoffeeController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("Detail/{id}")]
+        public IActionResult GetCoffeeById(int id)
         {
-            return View();
+            var coffee = _coffeeRepository.GetCoffeeById(id);
+            if (coffee == null) return NotFound();
+            return Ok(coffee);
         }
 
-        // GET: CoffeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CoffeeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult AddCoffee([FromBody] Coffee newCoffee)
+        {
+            if (newCoffee== null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _coffeeRepository.AddCoffee(newCoffee);
+                return Ok(newCoffee);
+            }
+        }
+
+        [HttpPut("Edit/{id}")]
+        public IActionResult UpdateCoffee(int id, [FromBody] Coffee coffeeObj)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _coffeeRepository.UpdateCoffee(id, coffeeObj);
+
+                return Ok();
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return NotFound();
             }
         }
 
-        // GET: CoffeeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CoffeeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("Delete/{id}")]
+        public IActionResult DeleteCoffee(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _coffeeRepository.DeleteCoffee(id);
+                return Ok();
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: CoffeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CoffeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return BadRequest();
             }
         }
     }

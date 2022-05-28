@@ -60,11 +60,18 @@ CREATE TABLE Brew (
 );
 
 INSERT INTO [USER] ([NAME], [UID]) VALUES ('Derek Malone', '1234');
+INSERT INTO [USER] ([NAME], [UID]) VALUES ('Theodore Franklin', '2345');
+INSERT INTO [USER] ([NAME], [UID]) VALUES ('Duke Dog DeHund VonWoofenstein', '3456');
+INSERT INTO [USER] ([NAME], [UID]) VALUES ('Danielle Malone', '4567');
 
 INSERT INTO Machine ([NAME], UserId) VALUES ('Gaggia Classic Pro', '1234');
 INSERT INTO Machine ([NAME], UserId) VALUES ('Aero Press', '1234');
+INSERT INTO Machine ([NAME], UserId) VALUES ('Gaggia Classic Pro', '2345');
 
 INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', '1234');
+INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', '2345');
+INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', '3456');
+INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', '4567');
 
 INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDuration, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Espresso', 'Fine Grind', 18, 36, 220, '00:01:30', 'grind, shake, tamp, brew', '1234', 1, 1);
 INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDuration, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Americano', 'Fine Grind', 22, 40, 220, '00:02:00', 'grind, pour grinds into AP, pour in water, steep, flip onto mug, press plunger', '1234', 2, 1);
