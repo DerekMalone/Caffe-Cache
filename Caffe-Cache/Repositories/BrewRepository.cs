@@ -41,7 +41,7 @@ namespace Caffe_Cache.Repositories
                                         FROM Brew
                                         WHERE UserId = @uid
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("uid", uid);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -71,7 +71,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public Brew GetBrewById(string uid, int id)
+        public Brew GetBrewById(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -90,9 +90,8 @@ namespace Caffe_Cache.Repositories
                                                 MachineId,
                                                 CoffeeId
                                         FROM Brew
-                                        WHERE UserId = @uid AND Id = @id
+                                        WHERE Id = @id
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -176,7 +175,7 @@ namespace Caffe_Cache.Repositories
         }
 
 
-        public void UpdateBrew(string uid, int id, Brew brewObj)
+        public void UpdateBrew(int id, Brew brewObj)
         {
             using (SqlConnection conn = Connection)
             {
@@ -192,10 +191,10 @@ namespace Caffe_Cache.Repositories
                                                 BrewTemp = @brewTemp,
                                                 BrewDuration = @brewDuration,
                                                 BrewInstructions = @brewInstructions,
-                                                UserId = @uid,
+                                                UserId = @userId,
                                                 MachineId = @machineId,
                                                 CoffeeId = @coffeeId
-                                        WHERE Id = @id AND UserId = @uid
+                                        WHERE Id = @id
                                         ";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", brewObj.Name);
@@ -205,7 +204,7 @@ namespace Caffe_Cache.Repositories
                     cmd.Parameters.AddWithValue("@brewTemp", brewObj.BrewTemp);
                     cmd.Parameters.AddWithValue("@brewDuration", brewObj.BrewDuration);
                     cmd.Parameters.AddWithValue("@brewInstructions", brewObj.BrewInstructions);
-                    cmd.Parameters.AddWithValue("@userId", uid);
+                    cmd.Parameters.AddWithValue("@userId", brewObj.UserId);
                     cmd.Parameters.AddWithValue("@machineId", brewObj.MachineId);
                     cmd.Parameters.AddWithValue("@coffeeId", brewObj.CoffeeId);
 
@@ -232,5 +231,183 @@ namespace Caffe_Cache.Repositories
             }
         }
 
+        public List<Brew> GetBrewsByMachineId(int machineId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                                [Name] AS BrewName,
+                                                GrindSize,
+                                                CoffeeWeight,
+                                                WaterVolume,
+                                                BrewTemp,
+                                                BrewDuration,
+                                                BrewInstructions,
+                                                UserId,
+                                                MachineId,
+                                                CoffeeId
+                                        FROM Brew
+                                        WHERE MachineId = @machineId
+                                        ";
+                    cmd.Parameters.AddWithValue("@machineId", machineId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Brew> list = new List<Brew>();
+                        while (reader.Read())
+                        {
+                            Brew brew = new Brew
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("BrewName")),
+                                GrindSize = reader.GetString(reader.GetOrdinal("GrindSize")),
+                                CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
+                                WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
+                                BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
+                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                                MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
+                                CoffeeId = reader.GetInt32(reader.GetOrdinal("CoffeeId")),
+                            };
+
+                            list.Add(brew);
+                        }
+                        return list;
+                    }
+                }
+
+            }
+        }
+
+        public List<Brew> GetBrewsByCoffeeId(int coffeeId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                                [Name] AS BrewName,
+                                                GrindSize,
+                                                CoffeeWeight,
+                                                WaterVolume,
+                                                BrewTemp,
+                                                BrewDuration,
+                                                BrewInstructions,
+                                                UserId,
+                                                MachineId,
+                                                CoffeeId
+                                        FROM Brew
+                                        WHERE CoffeeId = @coffeeId
+                                        ";
+                    cmd.Parameters.AddWithValue("@coffeeId", coffeeId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Brew> list = new List<Brew>();
+                        while (reader.Read())
+                        {
+                            Brew brew = new Brew
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("BrewName")),
+                                GrindSize = reader.GetString(reader.GetOrdinal("GrindSize")),
+                                CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
+                                WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
+                                BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
+                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                                MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
+                                CoffeeId = reader.GetInt32(reader.GetOrdinal("CoffeeId")),
+                            };
+
+                            list.Add(brew);
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public Machine GetMachineByBrewId(int brewMachineId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT  m.Id,
+                                        		m.[Name],
+                                        		m.UserId
+                                        FROM Machine m
+                                        INNER JOIN Brew b ON b.MachineId = m.Id
+                                        WHERE b.Id = @brewMachineId
+                                        ";
+                    cmd.Parameters.AddWithValue("@brewMachineId", brewMachineId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Machine brewsMachine = new Machine
+                            {                            
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                UserId= reader.GetString(reader.GetOrdinal("UserId")),                                
+                            };
+
+                            return brewsMachine;
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public Coffee GetCoffeeByBrewId(int brewCoffeeId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT  c.Id,
+                                                c.Brand,
+                                        		c.[Name],
+                                                c.RoastType,
+                                        		c.UserId
+                                        FROM Coffee c
+                                        INNER JOIN Brew b ON b.CoffeeId = c.Id
+                                        WHERE b.Id = @brewCoffeeId
+                                        ";
+                    cmd.Parameters.AddWithValue("@brewCoffeeId", brewCoffeeId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Coffee brewsCoffee = new Coffee
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Brand = reader.GetString(reader.GetOrdinal("Brand")),
+                                RoastType = reader.GetString(reader.GetOrdinal("RoastType")),
+                                UserId = reader.GetString(reader.GetOrdinal("UserId")),
+                            };
+
+                            return brewsCoffee;
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
     }
 }

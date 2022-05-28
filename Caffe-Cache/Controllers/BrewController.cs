@@ -1,5 +1,6 @@
 ﻿using Caffe_Cache.Models;
 using Caffe_Cache.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,18 +18,19 @@ namespace Caffe_Cache.Controllers
                 _brewRepository = coffeeRepository;
             }
 
+            //[HttpGet("{uid}")]
             [HttpGet("{uid}")]
-            public IActionResult GetAllCoffee(string uid)
+            public IActionResult GetAllBrews(string uid)
             {
                 List<Brew> brews = _brewRepository.GetAllBrews(uid);
                 if (brews == null) return NotFound();
                 return Ok(brews);
             }
 
-            [HttpGet("{uid}/{id}")]
-            public IActionResult GetBrewById(string uid, int id)
+            [HttpGet("Detail/{id}")]
+            public IActionResult GetBrewById(int id)
             {
-                var brew = _brewRepository.GetBrewById(uid, id);
+                var brew = _brewRepository.GetBrewById(id);
                 if (brew == null) return NotFound();
                 return Ok(brew);
             }
@@ -47,12 +49,12 @@ namespace Caffe_Cache.Controllers
                 }
             }
 
-            [HttpPut("Edit/{uid}/{id}")]
-            public IActionResult UpdateBrew(string uid, int id, [FromBody] Brew brewObj)
+            [HttpPut("Edit/{id}")]
+            public IActionResult UpdateBrew(int id, [FromBody] Brew brewObj)
             {
                 try
                 {
-                _brewRepository.UpdateBrew(uid, id, brewObj);
+                _brewRepository.UpdateBrew(id, brewObj);
 
                     return Ok();
                 }
@@ -61,7 +63,7 @@ namespace Caffe_Cache.Controllers
                     return NotFound();
                 }
             }
-
+        
             [HttpDelete("Delete/{id}")]
             public IActionResult DeleteBrew(int id)
             {
@@ -75,5 +77,38 @@ namespace Caffe_Cache.Controllers
                     return BadRequest();
                 }
             }
+
+            [HttpGet("Machine/{machineId}")]
+            public IActionResult GetBrewsByMachineId(int machineId)
+            {
+                List<Brew> brews = _brewRepository.GetBrewsByMachineId(machineId);
+                if (brews == null) return NotFound();
+                return Ok(brews);
+            }
+
+            [HttpGet("Coffee/{coffeeId}")]
+            public IActionResult GetBrewsByCoffeeId(int coffeeId)
+            {
+                List<Brew> brews = _brewRepository.GetBrewsByCoffeeId(coffeeId);
+                if (brews == null) return NotFound();
+                return Ok(brews);
+            }
+
+        [HttpGet("Detail/Machine/{id}")]
+        public IActionResult GetMachineByBrewId(int id)
+        {
+            Machine brewsMachine = _brewRepository.GetMachineByBrewId(id);
+            if (brewsMachine == null) return NotFound();
+            return Ok(brewsMachine);
+        }
+
+        [HttpGet("Detail/Coffee/{id}")]
+        public IActionResult GetCoffeeByBrewId(int id)
+        {
+            Coffee brewsCoffee = _brewRepository.GetCoffeeByBrewId(id);
+            if (brewsCoffee == null) return NotFound();
+            return Ok(brewsCoffee);
+        }
+        // make three repo calls and use view model here.
     }
 }

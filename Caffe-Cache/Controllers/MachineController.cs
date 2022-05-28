@@ -10,25 +10,25 @@ namespace Caffe_Cache.Controllers
 
     public class MachineController : Controller
     {
-        private readonly IMachineRepository _machineRepo;
+        private readonly IMachineRepository _machineReposoitory;
 
         public MachineController(IMachineRepository machineRepository)
         {
-            _machineRepo = machineRepository;
+            _machineReposoitory = machineRepository;
         }
 
         [HttpGet("{uid}")]
         public IActionResult GetAllMachines(string uid)
         {
-            List<Machine> machines = _machineRepo.GetAllMachines(uid);
+            List<Machine> machines = _machineReposoitory.GetAllMachines(uid);
             if (machines == null) return NotFound();
             return Ok(machines);
         }
 
-        [HttpGet("{uid}/{id}")]
-        public IActionResult GetMachineById(string uid, int id)
+        [HttpGet("Detail/{id}")]
+        public IActionResult GetMachineById(int id)
         {
-            var machine = _machineRepo.GetMachineById(uid, id);
+            var machine = _machineReposoitory.GetMachineById(id);
             if (machine == null) return NotFound();
             return Ok(machine);
         }
@@ -42,17 +42,17 @@ namespace Caffe_Cache.Controllers
             }
             else
             {
-                _machineRepo.AddMachine(newMachine);
+                _machineReposoitory.AddMachine(newMachine);
                 return Ok(newMachine);
             }
         }
 
-        [HttpPut("Edit/{uid}/{id}")]
-        public IActionResult UpdateMachine(string uid, int id, [FromBody] Machine machineObj)
+        [HttpPut("Edit/{id}")]
+        public IActionResult UpdateMachine(int id, [FromBody] Machine machineObj)
         {
             try
             {
-                _machineRepo.UpdateMachine(uid, id, machineObj);
+                _machineReposoitory.UpdateMachine(id, machineObj);
 
                 return Ok();
             }
@@ -67,7 +67,7 @@ namespace Caffe_Cache.Controllers
         {
             try
             {
-                _machineRepo.DeleteMachine(id);
+                _machineReposoitory.DeleteMachine(id);
                 return Ok();
             }
             catch

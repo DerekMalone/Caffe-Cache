@@ -34,7 +34,7 @@ namespace Caffe_Cache.Repositories
                                         FROM Machine
                                         WHERE UserId = @uid
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("uid", uid);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -56,7 +56,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public Machine? GetMachineById(string uid, int id)
+        public Machine? GetMachineById(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -68,9 +68,8 @@ namespace Caffe_Cache.Repositories
                                                [Name] AS MachineName,
                                                UserId
                                         FROM Machine
-                                        WHERE UserId = @uid AND Id = @id
+                                        WHERE Id = @id
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -116,7 +115,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public void UpdateMachine(string uid, int id, Machine machine)
+        public void UpdateMachine(int id, Machine machine)
         {
             using (SqlConnection conn = Connection)
             {
@@ -126,12 +125,12 @@ namespace Caffe_Cache.Repositories
                     cmd.CommandText = @"
                                         UPDATE Machine
                                         SET [Name] = @name,
-                                            UserId = @uid
-                                        WHERE Id = @id AND UserId = @uid
+                                            UserId = @userId
+                                        WHERE Id = @id
                                         ";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", machine.Name);
-                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@userId", machine.UserId);
 
                     cmd.ExecuteNonQuery();
                 }

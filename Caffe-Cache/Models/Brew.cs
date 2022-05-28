@@ -1,6 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Caffe_Cache.Models
 {
@@ -12,7 +10,7 @@ namespace Caffe_Cache.Models
         public int CoffeeWeight { get; set; }
         public int WaterVolume { get; set; }
         public int BrewTemp { get; set; }
-        [Column(TypeName = "time")]
+        //[Column(TypeName = "time")]
         public TimeSpan BrewDuration { get; set; }
         public string BrewInstructions { get; set; }
         public string UserId { get; set; }

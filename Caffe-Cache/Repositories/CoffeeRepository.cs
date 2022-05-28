@@ -33,10 +33,10 @@ namespace Caffe_Cache.Repositories
                                                [Name] AS CoffeeName,
                                                RoastType,
                                                UserId
-                                        FROM Coffee
+                                        FROM Coffee                                        
                                         WHERE UserId = @uid
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("uid", uid);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -59,7 +59,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public Coffee? GetCoffeeById(string uid, int id)
+        public Coffee? GetCoffeeById(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -73,9 +73,8 @@ namespace Caffe_Cache.Repositories
                                                RoastType,
                                                UserId
                                         FROM Coffee
-                                        WHERE UserId = @uid AND Id = @id
+                                        WHERE Id = @id
                                         ";
-                    cmd.Parameters.AddWithValue("@uid", uid);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -126,7 +125,7 @@ namespace Caffe_Cache.Repositories
             }
         }
         
-        public void UpdateCoffee(string uid, int id, Coffee coffeeObj)
+        public void UpdateCoffee(int id, Coffee coffeeObj)
         {
             using (SqlConnection conn = Connection)
             {
@@ -138,14 +137,14 @@ namespace Caffe_Cache.Repositories
                                             SET Brand = @brand,
                                                 [Name] = @name,
                                                 RoastType = @roastType,
-                                                UserId = @uid
-                                        WHERE Id = @id AND UserId = @uid
+                                                UserId = @userId
+                                        WHERE Id = @id
                                         ";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@brand", coffeeObj.Brand);
                     cmd.Parameters.AddWithValue("@name", coffeeObj.Name);
                     cmd.Parameters.AddWithValue("@roastType", coffeeObj.RoastType);
-                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@userId", coffeeObj.UserId);
 
                     cmd.ExecuteNonQuery();
                 }

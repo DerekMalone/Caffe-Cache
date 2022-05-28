@@ -25,10 +25,10 @@ namespace Caffe_Cache.Controllers
             return Ok(coffees);
         }
 
-        [HttpGet("{uid}/{id}")]
-        public IActionResult GetCoffeeById(string uid, int id)
+        [HttpGet("Detail/{id}")]
+        public IActionResult GetCoffeeById(int id)
         {
-            var coffee = _coffeeRepository.GetCoffeeById(uid, id);
+            var coffee = _coffeeRepository.GetCoffeeById(id);
             if (coffee == null) return NotFound();
             return Ok(coffee);
         }
@@ -47,12 +47,12 @@ namespace Caffe_Cache.Controllers
             }
         }
 
-        [HttpPut("Edit/{uid}/{id}")]
-        public IActionResult UpdateCoffee(string uid, int id, [FromBody] Coffee coffeeObj)
+        [HttpPut("Edit/{id}")]
+        public IActionResult UpdateCoffee(int id, [FromBody] Coffee coffeeObj)
         {
             try
             {
-                _coffeeRepository.UpdateCoffee(uid, id, coffeeObj);
+                _coffeeRepository.UpdateCoffee(id, coffeeObj);
 
                 return Ok();
             }
