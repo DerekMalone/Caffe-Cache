@@ -1,5 +1,6 @@
 // import firebase from 'firebase/app';
+import auth from './data/auth/firebaseConfig';
 
-// const getCurrentUserUid = () => firebase.auth().currentUser?.uid;
+const getCurrentUserUid = () => auth.currentUser?.uid;
 
-// export default getCurrentUserUid;
+export default getCurrentUserUid;
