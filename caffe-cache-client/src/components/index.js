@@ -1,7 +1,7 @@
-export { default as CaffeNavbar } from './CaffeNavbar';
-export { default as MachineComponent } from './MachineComponent';
-export { default as MachineForm } from './MachineForm';
-export { default as CoffeeComponent } from './CoffeeComponent';
-export { default as CoffeeForm } from './CoffeeForm';
-export { default as BrewComponent } from './BrewComponent';
-export { default as BrewForm } from './BrewForm';
+export { CaffeNavbar } from './CaffeNavbar';
+export { MachineComponent } from './MachineComponent';
+export { MachineForm } from './MachineForm';
+export { CoffeeComponent } from './CoffeeComponent';
+export { CoffeeForm } from './CoffeeForm';
+export { BrewComponent } from './BrewComponent';
+export { BrewForm } from './BrewForm';

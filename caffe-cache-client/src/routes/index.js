@@ -1,13 +1,13 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HomeView } from '../views';
 
-export const Routes = () => {
+export const AppRoutes = () => {
   return (
     <>
-        <Switch>
+        <Routes>
             <Route exact path='/' component={() => <HomeView />} />
-        </Switch>
+        </Routes>
     </>
   )
 }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Routes from './routes/index';
+import { AppRoutes } from './routes/index';
 import { CaffeNavbar } from './components';
 import auth from './data/auth/firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import SignIn from './views/SignIn';
 
 function App() {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (authed) => {
@@ -20,18 +21,24 @@ function App() {
         setUser(userObj);
       } else if (user || user === null) {
         setUser(false);        
-        navigate('/');
+        // navigate('/');
       }
     });
   }, []);
 
   return (
+    <>
+    {user ? (
     <div className='App'>
       <CaffeNavbar user={user} />
       <div className='main-container'>
-        <Routes user={user} />
+        <AppRoutes user={user} />
       </div>
     </div>
+    ) : (
+      <SignIn />
+    )}
+    </>
   );
 }
 
