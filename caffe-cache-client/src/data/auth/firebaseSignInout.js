@@ -5,8 +5,10 @@ const signInUser = async () => {
   const provider = await new GoogleAuthProvider();
   signInWithPopup(auth, provider);
 };
+
 const signOutUser = () =>
   new Promise((resolve, reject) => {
     getAuth().signOut().then(resolve).catch(reject);    
   });
+
 export { signInUser, signOutUser };
