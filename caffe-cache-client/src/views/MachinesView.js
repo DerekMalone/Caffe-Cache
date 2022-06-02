@@ -3,16 +3,16 @@ import { MachineComponent } from "../components";
 import { getMachinesByUid } from "../data/index";
 // import getCurrentUserUid from '../data/userHelper';
 
-export const MachinesView = (user) => {
+export const MachinesView = ({ userUID }) => {
   const [machines, setMachines] = useState([]);
   // const [uid, setUID] = useState(null);
 
   useEffect(() => {
     // getCurrentUserUid().then(setUID);
-    getMachinesByUid(user?.uid).then((machineArray) =>
+    getMachinesByUid(userUID).then((machineArray) =>
       setMachines(machineArray)
     );
-    console.log(machines);
+    console.log(userUID);
   }, []);
 
   return (
@@ -22,8 +22,7 @@ export const MachinesView = (user) => {
         <>
           {machines.map((machine) => (
             <div>
-              <MachineComponent key={machine.id} machine={machine} />
-              <h3 key={machine.id}>{machine.name}</h3>
+              <MachineComponent key={machine.id} machine={machine} />              
             </div>
           ))}
         </>

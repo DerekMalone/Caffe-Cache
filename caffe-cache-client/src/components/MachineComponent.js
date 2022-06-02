@@ -6,7 +6,7 @@ export const MachineComponent = ({ machine }) => {
   return (
     <>
     <Card body color="warning" outline>
-        <CardTitle tag="h5">{machine.Name}</CardTitle>
+        <CardTitle tag="h5">{machine.name}</CardTitle>
         {/* <Link
           to={`/editteam/${team.firebaseKey}`}
           type="button"

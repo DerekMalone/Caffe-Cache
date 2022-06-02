@@ -32,7 +32,7 @@ function App() {
     <div className='App'>
       <CaffeNavbar user={user} />
       <div className='main-container'>
-        <AppRoutes user={user} />
+        <AppRoutes userUID={user.uid} />
       </div>
     </div>
     ) : (
