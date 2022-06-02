@@ -1,25 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { getMachinesByUid } from '../data/MachineData';
-import getCurrentUserUid from '../data/userHelper';
+import React, { useEffect, useState } from "react";
+import { MachineComponent } from "../components";
+import { getMachinesByUid } from "../data/index";
+// import getCurrentUserUid from '../data/userHelper';
 
-export const MachinesView = () => {
+export const MachinesView = (user) => {
   const [machines, setMachines] = useState([]);
-  const [uid, setUID] = useState(null);
+  // const [uid, setUID] = useState(null);
 
   useEffect(() => {
-    const uid = getCurrentUserUid().then();
-    getMachinesByUid(uid).then((machineArray) => setMachines(machineArray))
-  }, [])
+    // getCurrentUserUid().then(setUID);
+    getMachinesByUid(user?.uid).then((machineArray) =>
+      setMachines(machineArray)
+    );
+    console.log(machines);
+  }, []);
 
   return (
     <>
-    <div>MachinesView</div>
-    {machines.map((machine) => (
-      <h3>
-        {machine.name}
-
-      </h3>
-    ))}
+      <div>MachinesView</div>
+      {machines ? (
+        <>
+          {machines.map((machine) => (
+            <div>
+              <MachineComponent key={machine.id} machine={machine} />
+              <h3 key={machine.id}>{machine.name}</h3>
+            </div>
+          ))}
+        </>
+      ) : (
+        <h2>No Machines just yet.</h2>
+      )}
     </>
-  )
-}
+  );
+};

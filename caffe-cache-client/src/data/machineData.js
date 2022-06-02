@@ -3,9 +3,11 @@ import databaseConfig from './auth/apiKeys';
 
 const dbUrl = databaseConfig.databaseURL;
 
-const getMachinesByUid = (uid) => new Promise ((resolve, reject) => {
- axios.get(`${dbUrl}/`)
-})
+const getMachinesByUid = async (uid) => {
+ const machinesArray = await axios.get(`${dbUrl}/Machine/1234`);
+ const machinesData = machinesArray.data;
+ return machinesData;
+};
 
 const getMachineById = (uid) => new Promise ((resolve, reject) => {
 

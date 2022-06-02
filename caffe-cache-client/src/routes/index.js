@@ -1,12 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
-import { HomeView } from '../views';
+import { HomeView, MachinesView } from '../views';
 
-export const AppRoutes = () => {
+export const AppRoutes = ({ user }) => {
   return (
     <>
         <Routes>
-            <Route exact path='/' component={() => <HomeView />} />
+            <Route path='/' element={<HomeView />} />
+            <Route path='/Machines' element={<MachinesView user={user} />} />
         </Routes>
     </>
   )
