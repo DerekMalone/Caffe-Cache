@@ -11,7 +11,7 @@ FROM [User]
 --Get Brews by UID
 SELECT *
 FROM Brew
-WHERE UserId = '1234'
+--WHERE UserId = '1234'
 
 SELECT b.Id,
 	b.[Name],
@@ -128,3 +128,16 @@ SELECT  c.Id as CoffeeId,
 FROM Coffee c
 INNER JOIN Brew b ON b.CoffeeId = c.Id
 WHERE b.Id = 1
+
+UPDATE Machine
+SET UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
+WHERE Id = 1
+
+UPDATE Brew
+SET UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
+WHERE Id = 1
+
+UPDATE Brew
+SET UserId = 'nJ9zfQ0E0OcgNe1dwPFwb7MqFkA2'
+WHERE Id = 2
+

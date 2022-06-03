@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { AppRoutes } from './routes/index';
 import { CaffeNavbar } from './components';
 import auth from './data/auth/firebaseConfig';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SignIn from './views/SignIn';
 
 function App() {
   const [user, setUser] = useState(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (authed) => {
@@ -21,7 +21,7 @@ function App() {
         setUser(userObj);
       } else if (user || user === null) {
         setUser(false);        
-        // navigate('/');
+        navigate('/');
       }
     });
   }, []);
@@ -32,7 +32,7 @@ function App() {
     <div className='App'>
       <CaffeNavbar user={user} />
       <div className='main-container'>
-        <AppRoutes user={user} />
+        <AppRoutes userUID={user.uid} />
       </div>
     </div>
     ) : (
