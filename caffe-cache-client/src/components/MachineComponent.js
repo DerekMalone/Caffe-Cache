@@ -19,7 +19,7 @@ export const MachineComponent = ({ machine }) => {
   return (
     <>
     <Card body color="warning" outline>
-        <CardTitle tag="h5" onClick={() => navigate(`/Machine/Detail/${machine.id}`)}>{machine.name}</CardTitle>
+        <CardTitle tag="h5" onClick={() => navigate(`/MachineDetail/${machine.id}`)}>{machine.name}</CardTitle>
         <Button
           type="button"
           className="btn btn-info"
