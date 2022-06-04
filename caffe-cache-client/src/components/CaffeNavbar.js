@@ -28,10 +28,10 @@ export const CaffeNavbar = () => {
                 <NavLink href='/Machines'>Machines</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href='/'>Coffees</NavLink>
+                <NavLink href='/Coffees'>Coffees</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href='/'>Brews</NavLink>
+                <NavLink href='/Brews'>Brews</NavLink>
               </NavItem>
               <li className='nav-item'>
                 <button

@@ -1,7 +1,18 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
-import { MachineForm } from '../components';
-import { EditMachineView, HomeView, MachineDetailView, MachinesView } from '../views';
+import { BrewForm, CoffeeForm, MachineForm } from '../components';
+import { 
+  HomeView,
+  MachinesView,
+  MachineDetailView,
+  EditMachineView,
+  CoffeesView,
+  EditCoffeeView,
+  CoffeeDetailView,
+  BrewsView,
+  EditBrewView,
+  BrewDetailView,
+ } from '../views';
 
 export const AppRoutes = ({ userUID }) => {
   return (
@@ -9,9 +20,17 @@ export const AppRoutes = ({ userUID }) => {
         <Routes>
             <Route path='/' element={<HomeView userUID={userUID}/>} />
             <Route path='/Machines' element={<MachinesView userUID={userUID} />} />
-            <Route path='/MachineForm' element={<MachineForm />} /> {/* userUID={userUID} */}
-            <Route path='/EditMachine/:machineId' element={<EditMachineView />} /> {/* userUID={userUID} */}
-            <Route path='/Machine/Detail/:machineId' element={<MachineDetailView />} />
+            <Route path='/Coffees' element={<CoffeesView userUID={userUID} />} />
+            <Route path='/Brews' element={<BrewsView userUID={userUID} />} />
+            <Route path='/MachineForm' element={<MachineForm />} /> 
+            <Route path='/CoffeeForm' element={<CoffeeForm/>} />
+            <Route path='/BrewForm' element={<BrewForm/>} />
+            <Route path='/EditMachine/:machineId' element={<EditMachineView />} /> 
+            <Route path='/EditCoffee/:coffeeId' element={<EditCoffeeView />} /> 
+            <Route path='/EditBrew/:coffeeId' element={<EditBrewView />} /> 
+            <Route path='/MachineDetail/:machineId' element={<MachineDetailView />} />
+            <Route path='/CoffeeDetail/:coffeeId' element={<CoffeeDetailView />} />
+            <Route path='/BrewDetail/:coffeeId' element={<BrewDetailView />} />
         </Routes>
     </>
   )
