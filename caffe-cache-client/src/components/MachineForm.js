@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import auth from '../data/auth/firebaseConfig';
-import { getMachineById, addMachine, editMachine } from '../data/machineData'
+import { getMachineById, addMachine, editMachine } from '../data'
 
 const initialState = {
     name: '',

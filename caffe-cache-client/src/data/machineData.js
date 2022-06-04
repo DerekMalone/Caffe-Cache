@@ -34,4 +34,10 @@ const editMachine = (machineId, machineObj) => new Promise ((resolve, reject) =>
     .catch(reject);
 });
 
-export { getMachinesByUid , getMachineById, addMachine, editMachine }
+const deleteMachine = (machineId, uid) => new Promise ((resolve, reject) => {
+    axios.delete(`${dbUrl}/Machine/Delete/${machineId}`)
+    .then(() => getMachinesByUid(uid).then(resolve))
+    .catch(reject);
+});
+
+export { getMachinesByUid , getMachineById, addMachine, editMachine, deleteMachine }
