@@ -141,3 +141,19 @@ UPDATE Brew
 SET UserId = 'nJ9zfQ0E0OcgNe1dwPFwb7MqFkA2'
 WHERE Id = 2
 
+
+
+UPDATE Brew                                            
+    SET [Name] = 'Test 2',
+        GrindSize = 'Test 2',
+        CoffeeWeight = 22,
+        WaterVolume = 22,
+        BrewTemp = 22,
+        BrewDurationHour = 0,
+        BrewDurationMin = 1,
+        BrewDurationSec = 1,
+        BrewInstructions = 'Test 2',
+        UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83',
+        MachineId = 0,
+        CoffeeId = 0
+WHERE Id = 6

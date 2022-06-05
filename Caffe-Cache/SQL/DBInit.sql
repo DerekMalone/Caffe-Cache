@@ -49,7 +49,9 @@ CREATE TABLE Brew (
     CoffeeWeight INT NULL,
     WaterVolume INT NUll,
     BrewTemp INT NULL,
-    BrewDuration TIME NULL,
+    BrewDurationHour Int NULL,
+    BrewDurationMin Int NULL,
+    BrewDurationSec Int NULL,
     BrewInstructions TEXT NULL,
     UserId VARCHAR(55) NOT NULL,
     MachineId INT NOT NULL,
@@ -73,5 +75,5 @@ INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', '
 INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', 'nJ9zfQ0E0OcgNe1dwPFwb7MqFkA2');
 INSERT INTO Coffee (Brand, [Name], RoastType, UserId) VALUES ('8th And Roast', 'French Connection', 'Medium Light', '0xTSjm1XDsWnFUOA8wdZklBtFB83');
 
-INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDuration, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Espresso', 'Fine Grind', 18, 36, 220, '00:01:30', 'grind, shake, tamp, brew', '1234', 1, 1);
-INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDuration, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Americano', 'Fine Grind', 22, 40, 220, '00:02:00', 'grind, pour grinds into AP, pour in water, steep, flip onto mug, press plunger', '1234', 2, 1);
+INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDurationHour, BrewDurationMin, BrewDurationSec, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Espresso', 'Fine Grind', 18, 36, 220, 00, 01, 30, 'grind, shake, tamp, brew', '1234', 1, 1);
+INSERT INTO Brew ([Name], GrindSize, CoffeeWeight, WaterVolume, BrewTemp, BrewDurationHour, BrewDurationMin, BrewDurationSec, BrewInstructions, UserId, MachineId, CoffeeId) VALUES ('Americano', 'Fine Grind', 22, 40, 220, 00, 02, 00, 'grind, pour grinds into AP, pour in water, steep, flip onto mug, press plunger', '1234', 2, 1);

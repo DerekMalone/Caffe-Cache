@@ -10,8 +10,9 @@ namespace Caffe_Cache.Models
         public int CoffeeWeight { get; set; }
         public int WaterVolume { get; set; }
         public int BrewTemp { get; set; }
-        //[Column(TypeName = "time")]
-        public TimeSpan BrewDuration { get; set; }
+        public int BrewDurationHour { get; set; }
+        public int BrewDurationMin { get; set; }
+        public int BrewDurationSec { get; set; }
         public string BrewInstructions { get; set; }
         public string UserId { get; set; }
         public int MachineId { get; set; }

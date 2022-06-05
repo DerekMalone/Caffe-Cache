@@ -33,7 +33,9 @@ namespace Caffe_Cache.Repositories
                                                 CoffeeWeight,
                                                 WaterVolume,
                                                 BrewTemp,
-                                                BrewDuration,
+                                                BrewDurationHour,
+                                                BrewDurationMin,
+                                                BrewDurationSec,
                                                 BrewInstructions,
                                                 UserId,
                                                 MachineId,
@@ -56,7 +58,9 @@ namespace Caffe_Cache.Repositories
                                 CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
                                 WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
                                 BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
-                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewDurationHour = reader.GetInt32(reader.GetOrdinal("BrewDurationHour")),
+                                BrewDurationMin = reader.GetInt32(reader.GetOrdinal("BrewDurationMin")),
+                                BrewDurationSec = reader.GetInt32(reader.GetOrdinal("BrewDurationSec")),
                                 BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
                                 UserId = reader.GetString(reader.GetOrdinal("UserId")),
                                 MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
@@ -84,7 +88,9 @@ namespace Caffe_Cache.Repositories
                                                 CoffeeWeight,
                                                 WaterVolume,
                                                 BrewTemp,
-                                                BrewDuration,
+                                                BrewDurationHour,
+                                                BrewDurationMin,
+                                                BrewDurationSec,
                                                 BrewInstructions,
                                                 UserId,
                                                 MachineId,
@@ -106,7 +112,9 @@ namespace Caffe_Cache.Repositories
                                 CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
                                 WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
                                 BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
-                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewDurationHour = reader.GetInt32(reader.GetOrdinal("BrewDurationHour")),
+                                BrewDurationMin = reader.GetInt32(reader.GetOrdinal("BrewDurationMin")),
+                                BrewDurationSec = reader.GetInt32(reader.GetOrdinal("BrewDurationSec")),
                                 BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
                                 UserId = reader.GetString(reader.GetOrdinal("UserId")),
                                 MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
@@ -134,7 +142,9 @@ namespace Caffe_Cache.Repositories
                                                             CoffeeWeight,
                                                             WaterVolume,
                                                             BrewTemp,
-                                                            BrewDuration,
+                                                            BrewDurationHour,
+                                                            BrewDurationMin,
+                                                            BrewDurationSec,
                                                             BrewInstructions,
                                                             UserId,
                                                             MachineId,
@@ -147,7 +157,9 @@ namespace Caffe_Cache.Repositories
                                                 @coffeeWeight,
                                                 @waterVolume,
                                                 @brewTemp,
-                                                @brewDuration,
+                                                @brewDurationHour,
+                                                @brewDurationMin,
+                                                @brewDurationSec,
                                                 @brewInstructions,
                                                 @userId,
                                                 @machineId,
@@ -160,7 +172,9 @@ namespace Caffe_Cache.Repositories
                     cmd.Parameters.AddWithValue("@coffeeWeight", brewObj.CoffeeWeight);
                     cmd.Parameters.AddWithValue("@waterVolume", brewObj.WaterVolume);
                     cmd.Parameters.AddWithValue("@brewTemp", brewObj.BrewTemp);
-                    cmd.Parameters.AddWithValue("@brewDuration", brewObj.BrewDuration);
+                    cmd.Parameters.AddWithValue("@brewDurationHour", brewObj.BrewDurationHour);
+                    cmd.Parameters.AddWithValue("@brewDurationMin", brewObj.BrewDurationMin);
+                    cmd.Parameters.AddWithValue("@brewDurationSec", brewObj.BrewDurationSec);
                     cmd.Parameters.AddWithValue("@brewInstructions", brewObj.BrewInstructions);
                     cmd.Parameters.AddWithValue("@userId", brewObj.UserId);
                     cmd.Parameters.AddWithValue("@machineId", brewObj.MachineId);
@@ -189,7 +203,9 @@ namespace Caffe_Cache.Repositories
                                                 CoffeeWeight = @coffeeWeight,
                                                 WaterVolume = @waterVolume,
                                                 BrewTemp = @brewTemp,
-                                                BrewDuration = @brewDuration,
+                                                BrewDurationHour = @brewDurationHour,
+                                                BrewDurationMin = @brewDurationMin,
+                                                BrewDurationSec = @brewDurationSec,
                                                 BrewInstructions = @brewInstructions,
                                                 UserId = @userId,
                                                 MachineId = @machineId,
@@ -202,7 +218,9 @@ namespace Caffe_Cache.Repositories
                     cmd.Parameters.AddWithValue("@coffeeWeight", brewObj.CoffeeWeight);
                     cmd.Parameters.AddWithValue("@waterVolume", brewObj.WaterVolume);
                     cmd.Parameters.AddWithValue("@brewTemp", brewObj.BrewTemp);
-                    cmd.Parameters.AddWithValue("@brewDuration", brewObj.BrewDuration);
+                    cmd.Parameters.AddWithValue("@brewDurationHour", brewObj.BrewDurationHour);
+                    cmd.Parameters.AddWithValue("@brewDurationMin", brewObj.BrewDurationMin);
+                    cmd.Parameters.AddWithValue("@brewDurationSec", brewObj.BrewDurationSec);
                     cmd.Parameters.AddWithValue("@brewInstructions", brewObj.BrewInstructions);
                     cmd.Parameters.AddWithValue("@userId", brewObj.UserId);
                     cmd.Parameters.AddWithValue("@machineId", brewObj.MachineId);
@@ -244,7 +262,9 @@ namespace Caffe_Cache.Repositories
                                                 CoffeeWeight,
                                                 WaterVolume,
                                                 BrewTemp,
-                                                BrewDuration,
+                                                BrewDurationHour,
+                                                BrewDurationMin,
+                                                BrewDurationSec,
                                                 BrewInstructions,
                                                 UserId,
                                                 MachineId,
@@ -267,7 +287,9 @@ namespace Caffe_Cache.Repositories
                                 CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
                                 WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
                                 BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
-                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewDurationHour = reader.GetInt32(reader.GetOrdinal("BrewDurationHour")),
+                                BrewDurationMin = reader.GetInt32(reader.GetOrdinal("BrewDurationMin")),
+                                BrewDurationSec = reader.GetInt32(reader.GetOrdinal("BrewDurationSec")),
                                 BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
                                 UserId = reader.GetString(reader.GetOrdinal("UserId")),
                                 MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),
@@ -296,7 +318,9 @@ namespace Caffe_Cache.Repositories
                                                 CoffeeWeight,
                                                 WaterVolume,
                                                 BrewTemp,
-                                                BrewDuration,
+                                                BrewDurationHour,
+                                                BrewDurationMin,
+                                                BrewDurationSec,
                                                 BrewInstructions,
                                                 UserId,
                                                 MachineId,
@@ -319,7 +343,9 @@ namespace Caffe_Cache.Repositories
                                 CoffeeWeight = reader.GetInt32(reader.GetOrdinal("CoffeeWeight")),
                                 WaterVolume = reader.GetInt32(reader.GetOrdinal("WaterVolume")),
                                 BrewTemp = reader.GetInt32(reader.GetOrdinal("BrewTemp")),
-                                BrewDuration = reader.GetTimeSpan(reader.GetOrdinal("BrewDuration")),
+                                BrewDurationHour = reader.GetInt32(reader.GetOrdinal("BrewDurationHour")),
+                                BrewDurationMin = reader.GetInt32(reader.GetOrdinal("BrewDurationMin")),
+                                BrewDurationSec = reader.GetInt32(reader.GetOrdinal("BrewDurationSec")),
                                 BrewInstructions = reader.GetString(reader.GetOrdinal("BrewInstructions")),
                                 UserId = reader.GetString(reader.GetOrdinal("UserId")),
                                 MachineId = reader.GetInt32(reader.GetOrdinal("MachineId")),

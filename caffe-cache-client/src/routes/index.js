@@ -27,10 +27,10 @@ export const AppRoutes = ({ userUID }) => {
             <Route path='/BrewForm' element={<BrewForm/>} />
             <Route path='/EditMachine/:machineId' element={<EditMachineView />} /> 
             <Route path='/EditCoffee/:coffeeId' element={<EditCoffeeView />} /> 
-            <Route path='/EditBrew/:coffeeId' element={<EditBrewView />} /> 
+            <Route path='/EditBrew/:brewId' element={<EditBrewView />} /> 
             <Route path='/MachineDetail/:machineId' element={<MachineDetailView />} />
             <Route path='/CoffeeDetail/:coffeeId' element={<CoffeeDetailView />} />
-            <Route path='/BrewDetail/:coffeeId' element={<BrewDetailView />} />
+            <Route path='/BrewDetail/:brewId' element={<BrewDetailView />} />
         </Routes>
     </>
   )
