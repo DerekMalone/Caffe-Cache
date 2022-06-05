@@ -28,7 +28,7 @@ const addBrew = (brewObj) => new Promise ((resolve, reject) => {
 })
 
 const editBrew = (brewId, brewObj) => new Promise ((resolve, reject) => {
-    axios.put(`${dbUrl}/MBrew/Edit/${brewId}`, brewObj)
+    axios.put(`${dbUrl}/Brew/Edit/${brewId}`, brewObj)
     .then(() => getBrewsByUid(brewObj.userId).then(resolve))
     .catch(reject);
 });

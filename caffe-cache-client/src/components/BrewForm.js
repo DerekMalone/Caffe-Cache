@@ -4,15 +4,18 @@ import { addBrew, editBrew, getBrewById } from "../data";
 import auth from "../data/auth/firebaseConfig";
 
 const initialState = {
-  name: "",
-  grindSize: "",
+  name: '',
+  grindSize: '',
   coffeeWeight: 0,
   waterVolume: 0,
   brewTemp: 0,
   brewDurationHour: 0,
   brewDurationMin: 0,
   brewDurationSec: 0,
-  brewInstructions: "",
+  brewInstructions: '',
+  userId: '',
+  machineId: '',
+  coffeeId: '',
 };
 
 export const BrewForm = () => {
@@ -34,6 +37,9 @@ export const BrewForm = () => {
           brewDurationMin: brewObj.brewDurationMin,
           brewDurationSec: brewObj.brewDurationSec,
           brewInstructions: brewObj.brewInstructions,
+          userId: brewObj.userId,
+          machineId: brewObj.machineId,
+          coffeeId: brewObj.coffeeId
         });
       });
     } else {
@@ -45,6 +51,14 @@ export const BrewForm = () => {
 
   const resetForm = () => {
     setFormInput({ ...initialState });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormInput((preState) => ({
+      ...preState,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -60,14 +74,6 @@ export const BrewForm = () => {
         navigate("/");
       });
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormInput((preState) => ({
-      ...preState,
-      [name]: value,
-    }));
   };
 
   return (
@@ -124,23 +130,23 @@ export const BrewForm = () => {
             required
           />
         </div>
-        <div className="timeBox">
-          <p>Hours    :    Min   :   Sec</p>
+        <div className='timeBox'>
+          <p>Hours : Min : Sec</p>
           <input
             type='number'
             min={0}
             max={99}
             name='brewDurationHour'
-            value={parseInt(formInput.brewDurationHour) || 0}
+            value={formInput.brewDurationHour || '0'}
             onChange={handleChange}
             required
-          />        
+          />
           <input
             type='number'
             min={0}
             max={99}
             name='brewDurationMin'
-            value={parseInt(formInput.brewDurationMin) || 0}
+            value={formInput.brewDurationMin || '0'}
             onChange={handleChange}
             required
           />
@@ -149,7 +155,7 @@ export const BrewForm = () => {
             min={0}
             max={99}
             name='brewDurationSec'
-            value={parseInt(formInput.brewDurationSec) || 0}
+            value={formInput.brewDurationSec || '0'}
             onChange={handleChange}
             required
           />
