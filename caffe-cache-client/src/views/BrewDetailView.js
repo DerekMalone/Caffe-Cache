@@ -8,6 +8,8 @@ export const BrewDetailView = () => {
 
   useEffect(() => {
     getBrewById(brewId).then(setBrew)
+    // try to make one async call to the backend via data
+    // if that doesn't work, set up async call here
   }, [])
 
   return (

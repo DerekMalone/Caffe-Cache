@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addBrew, editBrew, getBrewById } from "../data";
+import { addBrew, editBrew, getBrewById, getCoffeesByUid, getMachinesByUid } from "../data";
 import auth from "../data/auth/firebaseConfig";
 
 const initialState = {
@@ -20,6 +20,10 @@ const initialState = {
 
 export const BrewForm = () => {
   const [formInput, setFormInput] = useState({});
+  const [machines, setMachines] = useState([]);
+  const [coffees, setCoffees] = useState([]);
+  const [brewsMachine, setBrewsMachine] = useState({});
+  const [brewsCoffee, setBrewsCoffee] = useState({});
   const [uid, setUID] = useState(null);
   const { brewId } = useParams();
   const navigate = useNavigate();
@@ -45,6 +49,8 @@ export const BrewForm = () => {
     } else {
       const currentUID = auth.currentUser?.uid;
       setUID(currentUID);
+      getMachinesByUid(currentUID).then(setMachines);
+      getCoffeesByUid(currentUID).then(setCoffees);
       setFormInput(initialState);
     }
   }, []);
@@ -61,6 +67,15 @@ export const BrewForm = () => {
     }));
   };
 
+  const handleMachineSelection = (e) => {
+    setBrewsMachine(e.target)
+    // const {name, value } = e.target;
+    // setBrewsMachine((preState) => ({
+    //   ...preState,
+    //   [name]: value,
+    // }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (brewId) {
@@ -69,7 +84,7 @@ export const BrewForm = () => {
         navigate("/");
       });
     } else {
-      addBrew({ ...formInput, userId: uid }).then(() => {
+      addBrew({ ...formInput, userId: uid, machineId: brewsMachine }).then(() => {
         resetForm();
         navigate("/");
       });
@@ -169,6 +184,14 @@ export const BrewForm = () => {
             placeholder='Brew Nrew Instructions'
             required
           />
+        </div>
+        <div>
+          <label >
+            Choose a Machine
+            <select>
+              {machines.map((machine) => <option name='machineId' value={machine.id} onChange={handleMachineSelection} >{machine.name}</option>)}
+            </select>
+          </label>
         </div>
         <button type='submit' className='btn btn-success'>
           Submit
