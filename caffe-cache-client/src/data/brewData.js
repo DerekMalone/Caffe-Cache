@@ -9,8 +9,8 @@ const getBrewsByUid = async (userUID) => {
  return brewsData;
 };
 
-const getBrewById = async (uid) => {
-  const brewObj = await axios.get(`${dbUrl}/Brew/Detail/${uid}`)
+const getBrewById = async (bId) => {
+  const brewObj = await axios.get(`${dbUrl}/Brew/Detail/${bId}`)
   const brewData = brewObj.data;
   return brewData;
 };
@@ -39,4 +39,17 @@ const deleteBrew = (brewId, uid) => new Promise ((resolve, reject) => {
     .catch(reject);
 });
 
-export { getBrewsByUid , getBrewById, addBrew, editBrew, deleteBrew }
+const getBrewMachineCoffee = async (brewId) => {
+    const brewObj = await axios.get(`${dbUrl}/Brew/Detail/${brewId}`)
+    const brewData = brewObj.data;
+
+    const machineObj = await axios.get(`${dbUrl}/Brew/Detail/Machine/${brewData.machineId}`)
+    const machineData = machineObj.data;
+
+    const coffeeObj = await axios.get(`${dbUrl}/Brew/Detail/Coffee/${brewData.coffeeId}`)
+    const coffeeData = coffeeObj.data;
+
+    return [brewData, machineData, coffeeData]
+}
+
+export { getBrewsByUid , getBrewById, addBrew, editBrew, deleteBrew, getBrewMachineCoffee }

@@ -1,17 +1,20 @@
 ﻿SELECT *		
 FROM Coffee
-WHERE UserId = '1234'
+WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
 
 SELECT *
 FROM Machine
+WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
 
-SELECT *
-FROM [User]
 
 --Get Brews by UID
 SELECT *
 FROM Brew
---WHERE UserId = '1234'
+WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
+
+SELECT *
+FROM [User]
+
 
 SELECT b.Id,
 	b.[Name],
@@ -53,6 +56,14 @@ WHERE UserId = '1234' AND Id = 1
 UPDATE Machine
 SET [Name] = 'Gaggia Classic Pro'
 WHERE Id = 1 AND UserId = '1234'
+
+UPDATE Brew
+SET MachineId = 1
+WHERE Id = 4
+
+UPDATE Brew
+SET CoffeeId = 4
+WHERE Id = 4
 
 INSERT INTO Brew (
 				[Name],
@@ -117,17 +128,18 @@ SELECT b.Id as BrewId,
 		m.UserId as MachineUserId
 FROM Machine m
  INNER JOIN Brew b ON b.MachineId = m.Id
-WHERE b.Id = 2
+WHERE b.Id = 9
 
 --GetCoffeeByBrewId
-SELECT  c.Id as CoffeeId,
+SELECT  b.Id as BrewId,
+		c.Id as CoffeId,
 		c.Brand,
 		c.[Name],
 		c.RoastType,
 		c.UserId
 FROM Coffee c
 INNER JOIN Brew b ON b.CoffeeId = c.Id
-WHERE b.Id = 1
+WHERE b.Id = 9
 
 UPDATE Machine
 SET UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'

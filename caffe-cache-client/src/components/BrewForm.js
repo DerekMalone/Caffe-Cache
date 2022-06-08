@@ -1,50 +1,86 @@
+import { array } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addBrew, editBrew, getBrewById } from "../data";
+import {
+  addBrew,
+  editBrew,
+  getBrewById,
+  getCoffeesByUid,
+  getMachineById,
+  getMachinesByUid,
+} from "../data";
 import auth from "../data/auth/firebaseConfig";
+import { getBrewMachineCoffee } from "../data/brewData";
 
 const initialState = {
-  name: '',
-  grindSize: '',
+  name: "",
+  grindSize: "",
   coffeeWeight: 0,
   waterVolume: 0,
   brewTemp: 0,
   brewDurationHour: 0,
   brewDurationMin: 0,
   brewDurationSec: 0,
-  brewInstructions: '',
-  userId: '',
-  machineId: '',
-  coffeeId: '',
+  brewInstructions: "",
+  userId: "",
+  machineId: "",
+  coffeeId: "",
 };
 
 export const BrewForm = () => {
   const [formInput, setFormInput] = useState({});
+  const [machines, setMachines] = useState([]);
+  const [coffees, setCoffees] = useState([]);
+  const [brewsMachine, setBrewsMachine] = useState(null);
+  const [brewsCoffee, setBrewsCoffee] = useState(null);
+  const [editBrewMachine, setEditBrewMachine] = useState({});
+  const [editBrewCoffee, setEditBrewCoffee] = useState({});
   const [uid, setUID] = useState(null);
   const { brewId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (brewId) {
-      getBrewById(brewId).then((brewObj) => {        
+      getBrewMachineCoffee(brewId).then((array) => {
+        const brew= array[0];
+        const machine = array[1];
+        const coffee = array[2];        
         setFormInput({
-          name: brewObj.name,
-          grindSize: brewObj.grindSize,
-          coffeeWeight: brewObj.coffeeWeight,
-          waterVolume: brewObj.waterVolume,
-          brewTemp: brewObj.brewTemp,
-          brewDurationHour: brewObj.brewDurationHour,
-          brewDurationMin: brewObj.brewDurationMin,
-          brewDurationSec: brewObj.brewDurationSec,
-          brewInstructions: brewObj.brewInstructions,
-          userId: brewObj.userId,
-          machineId: brewObj.machineId,
-          coffeeId: brewObj.coffeeId
-        });
-      });
+              name: brew.name,
+              grindSize: brew.grindSize,
+              coffeeWeight: brew.coffeeWeight,
+              waterVolume: brew.waterVolume,
+              brewTemp: brew.brewTemp,
+              brewDurationHour: brew.brewDurationHour,
+              brewDurationMin: brew.brewDurationMin,
+              brewDurationSec: brew.brewDurationSec,
+              brewInstructions: brew.brewInstructions,
+              userId: brew.userId,
+              machineId: brew.machineId,
+              coffeeId: brew.coffeeId,
+            })
+        setEditBrewMachine({
+          name: machine.name,
+          userId: machine.userId
+        })
+        setEditBrewCoffee({
+          brand: coffee.brand,
+          name: coffee.name,
+          roastType: coffee.roastType,
+          userId: coffee.userId
+        })    
+        setBrewsMachine(machine.id);
+        setBrewsCoffee(coffee.id);    
+      })  
+      const currentUID = auth.currentUser?.uid;
+      setUID(currentUID);
+      getMachinesByUid(currentUID).then(setMachines);
+      getCoffeesByUid(currentUID).then(setCoffees);    
     } else {
       const currentUID = auth.currentUser?.uid;
       setUID(currentUID);
+      getMachinesByUid(currentUID).then(setMachines);
+      getCoffeesByUid(currentUID).then(setCoffees);
       setFormInput(initialState);
     }
   }, []);
@@ -61,15 +97,36 @@ export const BrewForm = () => {
     }));
   };
 
+  const handleMachineSelection = (e) => {
+    const value = e.target.value;
+    setBrewsMachine(value);
+  };
+
+  const handleCoffeeSelection = (e) => {
+    const value = e.target.value;
+    setBrewsCoffee(value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (brewId) {
-      editBrew(brewId, formInput).then(() => {
-        resetForm();
-        navigate("/");
-      });
+      editBrew(brewId,
+            ({
+              ...formInput, 
+              machineId: brewsMachine,
+              coffeeId: brewsCoffee,
+            })
+            ).then(() => {
+            resetForm();
+            navigate("/");
+          });
     } else {
-      addBrew({ ...formInput, userId: uid }).then(() => {
+      addBrew({
+        ...formInput,
+        userId: uid,
+        machineId: brewsMachine,
+        coffeeId: brewsCoffee,
+      }).then(() => {
         resetForm();
         navigate("/");
       });
@@ -137,7 +194,7 @@ export const BrewForm = () => {
             min={0}
             max={99}
             name='brewDurationHour'
-            value={formInput.brewDurationHour || '0'}
+            value={formInput.brewDurationHour || "0"}
             onChange={handleChange}
             required
           />
@@ -146,7 +203,7 @@ export const BrewForm = () => {
             min={0}
             max={99}
             name='brewDurationMin'
-            value={formInput.brewDurationMin || '0'}
+            value={formInput.brewDurationMin || "0"}
             onChange={handleChange}
             required
           />
@@ -155,7 +212,7 @@ export const BrewForm = () => {
             min={0}
             max={99}
             name='brewDurationSec'
-            value={formInput.brewDurationSec || '0'}
+            value={formInput.brewDurationSec || "0"}
             onChange={handleChange}
             required
           />
@@ -170,6 +227,88 @@ export const BrewForm = () => {
             required
           />
         </div>
+        {brewId ? (
+          // ''
+          <div>
+            <label>
+              Choose a Machine
+              <select
+                placeholder='Choose Machine'
+                onChange={handleMachineSelection}
+              >
+                <option value={editBrewMachine.id} disabled selected hidden>
+                  {editBrewMachine.name} 
+                </option>
+                {machines.map((machine) => (
+                  <option name='machineId' value={machine.id}>
+                    {machine.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        ) : (
+          <div>
+            <label>
+              Choose a Machine
+              <select
+                placeholder='Choose Machine'
+                onChange={handleMachineSelection}
+              >
+                <option value='' disabled selected hidden>
+                  Choose a Machine
+                </option>
+                {machines.map((machine) => (
+                  <option name='machineId' value={machine.id}>
+                    {machine.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        )}
+
+
+{brewId ? (
+          // ''
+          <div>
+            <label>
+              Choose a Coffee
+              <select
+                placeholder='Choose Coffee'
+                onChange={handleCoffeeSelection}
+              >
+                <option value={editBrewCoffee.id} disabled selected hidden>
+                  {editBrewCoffee.name} 
+                </option>
+                {coffees.map((coffee) => (
+                  <option name='coffeeId' value={coffee.id}>
+                    {coffee.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        ) : (
+          <div>
+          <label>
+            Choose a Coffee
+            <select
+              placeholder='Choose Coffee'
+              onChange={handleCoffeeSelection}
+            >
+              <option value='' disabled selected hidden>
+                Choose a Coffee
+              </option>
+              {coffees.map((coffee) => (
+                <option name='coffeeId' value={coffee.id}>
+                  {coffee.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        )}        
         <button type='submit' className='btn btn-success'>
           Submit
         </button>
@@ -177,3 +316,5 @@ export const BrewForm = () => {
     </>
   );
 };
+
+// onSelect={handleMachineSelection}
