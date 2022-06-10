@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { CoffeeComponent } from '../components';
 import { getCoffeesByUid } from '../data';
+import { Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+
 
 export const CoffeesView = ({ userUID }) => {
   const [coffees, setCoffees] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCoffeesByUid(userUID).then((coffeesArray) => 
@@ -11,9 +15,14 @@ export const CoffeesView = ({ userUID }) => {
     );
   }, []);
 
+  const handleNavCoffeeForm = () => {
+    navigate('/CoffeeForm');
+  }
+
   return (
     <>
-      <div>Coffees View</div>
+      <h2>Coffees View</h2>
+      <Button type='button' onClick={handleNavCoffeeForm}>Add New Coffee</Button>
       {coffees ? (
         <>
         {coffees.map((coffee) => (

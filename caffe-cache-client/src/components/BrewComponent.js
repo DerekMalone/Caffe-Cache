@@ -10,12 +10,6 @@ const onClickNavEditBrew = () => {
   navigate(`/EditBrew/${brew.id}`)
 };
 
-const handleDelete = () => {
-  deleteBrew(brew.id, brew.userId).then(() => {
-    navigate('/');
-  })
-};
-
   return (
     <>
     <Card body color="warning" outline>
@@ -26,13 +20,6 @@ const handleDelete = () => {
           onClick={onClickNavEditBrew}
         >
           Edit Brew
-        </Button>
-        <Button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={handleDelete}
-        >
-          Delete Brew
         </Button>
       </Card>
     </>
