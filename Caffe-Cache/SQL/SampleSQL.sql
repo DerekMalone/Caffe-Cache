@@ -2,6 +2,10 @@
 FROM Coffee
 WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
 
+SELECT *		
+FROM Coffee
+WHERE UserId = 'nJ9zfQ0E0OcgNe1dwPFwb7MqFkA2'
+
 SELECT *
 FROM Machine
 WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
@@ -57,9 +61,17 @@ UPDATE Machine
 SET [Name] = 'Gaggia Classic Pro'
 WHERE Id = 1 AND UserId = '1234'
 
+UPDATE Coffee
+SET UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
+WHERE Id = 5
+
 UPDATE Brew
 SET MachineId = 1
 WHERE Id = 4
+
+UPDATE Brew
+SET CoffeeId = 6
+WHERE Id = 9
 
 UPDATE Brew
 SET CoffeeId = 4
@@ -119,8 +131,13 @@ SELECT Id,
 		MachineId,
 		CoffeeId
 FROM Brew
-WHERE CoffeeId = 9
+WHERE CoffeeId = 6
 
+--****
+--Get Machine by UID
+SELECT *
+FROM Machine
+WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
 --GetMachineByBrewId
 SELECT b.Id as BrewId,
 		m.Id as MachineId,
@@ -129,7 +146,14 @@ SELECT b.Id as BrewId,
 FROM Machine m
  INNER JOIN Brew b ON b.MachineId = m.Id
 WHERE b.Id = 9
+--****
 
+
+--****
+--Get Brews by UID
+SELECT *
+FROM Brew
+WHERE UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'
 --GetCoffeeByBrewId
 SELECT  b.Id as BrewId,
 		c.Id as CoffeId,
@@ -140,6 +164,9 @@ SELECT  b.Id as BrewId,
 FROM Coffee c
 INNER JOIN Brew b ON b.CoffeeId = c.Id
 WHERE b.Id = 9
+--****
+
+
 
 UPDATE Machine
 SET UserId = '0xTSjm1XDsWnFUOA8wdZklBtFB83'

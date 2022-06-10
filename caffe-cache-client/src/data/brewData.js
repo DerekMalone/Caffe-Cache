@@ -43,10 +43,10 @@ const getBrewMachineCoffee = async (brewId) => {
     const brewObj = await axios.get(`${dbUrl}/Brew/Detail/${brewId}`)
     const brewData = brewObj.data;
 
-    const machineObj = await axios.get(`${dbUrl}/Brew/Detail/Machine/${brewData.machineId}`)
+    const machineObj = await axios.get(`${dbUrl}/Brew/Detail/Machine/${brewId}`)
     const machineData = machineObj.data;
 
-    const coffeeObj = await axios.get(`${dbUrl}/Brew/Detail/Coffee/${brewData.coffeeId}`)
+    const coffeeObj = await axios.get(`${dbUrl}/Brew/Detail/Coffee/${brewId}`)
     const coffeeData = coffeeObj.data;
 
     return [brewData, machineData, coffeeData]
