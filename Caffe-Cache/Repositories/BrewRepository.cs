@@ -360,7 +360,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public Machine GetMachineByBrewId(int brewMachineId)
+        public Machine GetMachineByBrewId(int brewId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -373,9 +373,9 @@ namespace Caffe_Cache.Repositories
                                         		m.UserId
                                         FROM Machine m
                                         INNER JOIN Brew b ON b.MachineId = m.Id
-                                        WHERE b.Id = @brewMachineId
+                                        WHERE b.Id = @brewId
                                         ";
-                    cmd.Parameters.AddWithValue("@brewMachineId", brewMachineId);
+                    cmd.Parameters.AddWithValue("@brewId", brewId);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -396,7 +396,7 @@ namespace Caffe_Cache.Repositories
             }
         }
 
-        public Coffee GetCoffeeByBrewId(int brewCoffeeId)
+        public Coffee GetCoffeeByBrewId(int brewId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -411,16 +411,16 @@ namespace Caffe_Cache.Repositories
                                         		c.UserId
                                         FROM Coffee c
                                         INNER JOIN Brew b ON b.CoffeeId = c.Id
-                                        WHERE b.Id = @brewCoffeeId
+                                        WHERE b.Id = @brewId
                                         ";
-                    cmd.Parameters.AddWithValue("@brewCoffeeId", brewCoffeeId);
+                    cmd.Parameters.AddWithValue("@brewId", brewId);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             Coffee brewsCoffee = new Coffee
-                            {
+                            {                                
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 Name = reader.GetString(reader.GetOrdinal("Name")),
                                 Brand = reader.GetString(reader.GetOrdinal("Brand")),
