@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Card, CardBody, CardTitle } from 'reactstrap';
-import { deleteCoffee } from '../data';
 
 export const CoffeeComponent = ({ coffee }) => {
   const navigate = useNavigate();
@@ -9,12 +8,6 @@ export const CoffeeComponent = ({ coffee }) => {
   const editMachine = () => {
     navigate(`/EditCoffee/${coffee.id}`)
   }
-
-  const handleDelete = () => {
-    deleteCoffee(coffee.id, coffee.userId).then(() => {
-      navigate('/');
-    })
-  };
 
   return (
     <>
@@ -27,13 +20,6 @@ export const CoffeeComponent = ({ coffee }) => {
         onClick={editMachine}
       >
         Edit Coffee
-      </Button>
-      <Button
-        type='button'
-        className='btn btn-warning'
-        onClick={handleDelete}
-      >
-        Delete Coffee
       </Button>
     </Card>
     </>

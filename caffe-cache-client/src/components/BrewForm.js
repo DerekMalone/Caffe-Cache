@@ -4,9 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   addBrew,
   editBrew,
-  getBrewById,
   getCoffeesByUid,
-  getMachineById,
   getMachinesByUid,
 } from "../data";
 import auth from "../data/auth/firebaseConfig";
@@ -118,7 +116,7 @@ export const BrewForm = () => {
             })
             ).then(() => {
             resetForm();
-            navigate("/");
+            navigate("/Brews");
           });
     } else {
       addBrew({
@@ -128,7 +126,7 @@ export const BrewForm = () => {
         coffeeId: brewsCoffee,
       }).then(() => {
         resetForm();
-        navigate("/");
+        navigate("/Brews");
       });
     }
   };

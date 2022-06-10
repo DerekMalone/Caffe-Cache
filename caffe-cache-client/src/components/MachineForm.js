@@ -39,12 +39,12 @@ export const MachineForm = () => {
     if (machineId) {
       editMachine(machineId, formInput).then(() => {
         resetForm();
-        navigate('/');
+        navigate('/Machines');
       })
     } else {
       addMachine({ ...formInput, userId: uid }).then(() => {
           resetForm();
-          navigate('/');
+          navigate('/Machines');
       });
     }
   };

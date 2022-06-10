@@ -1,19 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, CardTitle } from 'reactstrap';
-import { deleteMachine } from '../data';
 
 export const MachineComponent = ({ machine }) => {
   const navigate = useNavigate();
 
   const onClickNav = () => {
     navigate(`/EditMachine/${machine.id}`)
-  }
-
-  const handleDelete = () => {
-    deleteMachine(machine.id, machine.userId).then(() => {
-      navigate('/')
-    })
   }
 
   return (
@@ -26,13 +19,6 @@ export const MachineComponent = ({ machine }) => {
           onClick={onClickNav}
         >
           Edit Machine
-        </Button>
-        <Button
-          type="button"
-          className="btn btn-outline-danger"
-          onClick={handleDelete}
-        >
-          Delete Machine
         </Button>
       </Card>
     </>

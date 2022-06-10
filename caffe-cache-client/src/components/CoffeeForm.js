@@ -50,12 +50,12 @@ export const CoffeeForm = () => {
     if (coffeeId) {
       editCoffee(coffeeId, formInput).then(() => {
         resetForm();
-        navigate('/');
+        navigate('/Coffees');
       })
     } else {
       addCoffee({ ...formInput, userId: uid }).then(() => {
         resetForm();
-        navigate('/');
+        navigate('/Coffees');
       })
     }
   }
