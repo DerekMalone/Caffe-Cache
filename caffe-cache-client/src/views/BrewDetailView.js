@@ -3,16 +3,46 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getBrewById } from '../data';
 import { deleteBrew } from '../data';
 import { Button } from 'reactstrap';
+import { getBrewMachineCoffee } from '../data/brewData';
 
 export const BrewDetailView = () => {
   const {brewId} = useParams();
   const [brew, setBrew] = useState({});
+  const [brewMachine, setBrewMachine] = useState({});
+  const [brewCoffee, setBrewCoffee] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    getBrewById(brewId).then(setBrew)
-    // try to make one async call to the backend via data
-    // if that doesn't work, set up async call here
+    // getBrewById(brewId).then(setBrew)
+    getBrewMachineCoffee(brewId).then((array) => {
+      const brew= array[0];
+      const machine = array[1];
+      const coffee = array[2];        
+      setBrew({
+            name: brew.name,
+            grindSize: brew.grindSize,
+            coffeeWeight: brew.coffeeWeight,
+            waterVolume: brew.waterVolume,
+            brewTemp: brew.brewTemp,
+            brewDurationHour: brew.brewDurationHour,
+            brewDurationMin: brew.brewDurationMin,
+            brewDurationSec: brew.brewDurationSec,
+            brewInstructions: brew.brewInstructions,
+            userId: brew.userId,
+            machineId: brew.machineId,
+            coffeeId: brew.coffeeId,
+          })
+          setBrewMachine({
+        name: machine.name,
+        userId: machine.userId
+      })
+      setBrewCoffee({
+        brand: coffee.brand,
+        name: coffee.name,
+        roastType: coffee.roastType,
+        userId: coffee.userId
+      })
+    })
   }, [])
   
 const onClickNavEditBrew = () => {
@@ -44,6 +74,18 @@ const handleDelete = () => {
         >
           Delete Brew
         </Button>
+      <hr/>
+      <div>
+        <section>          
+          <h5>Coffee</h5>
+          <p>{brewCoffee.name}</p>
+        </section>
+        
+        <section>          
+          <h5>Machine</h5>
+          <p>{brewMachine.name}</p>
+        </section>
+      </div>
     </>
   )
 }
