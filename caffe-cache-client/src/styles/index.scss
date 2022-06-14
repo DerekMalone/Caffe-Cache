@@ -23,3 +23,56 @@ code {
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margins */
 }
+
+.navbar-style {
+  background-color: #8A624A !important;
+}
+
+.navbrand-style {
+  color: #FFFFFF !important;
+  border: 1px solid #000000;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.nav-font-style-false {
+  color: #FFFFFF !important;
+  border: 1px solid #000000;
+  margin: 1rem;
+}
+
+.nav-font-style-true {
+  color: #FFFFFF !important;
+  border: 1px solid #000000;
+  margin: .25rem;
+  width: 5.5em;
+}
+
+.collapse-isOpen-true {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 1em;
+}
+
+
+.nav-item-conatainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nav-link-spacing {
+display: flex;
+width:75%;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.view-heading {
+
+}
+
+.add-btn {
+  
+}
