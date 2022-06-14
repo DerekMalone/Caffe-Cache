@@ -69,10 +69,22 @@ justify-content: center;
 flex-wrap: wrap;
 }
 
-.view-heading {
+.home-container {
+  width: 100%;
+  align-content: center;
+}
 
+.view-heading {
+  width: 100%;  
+  text-align: center;
 }
 
 .add-btn {
-  
+  margin: 3em 0 .5em 0;
+  text-align: center;
+  width: 100%;
+}
+
+.home-btn-style {
+  width: 50%;
 }
