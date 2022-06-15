@@ -21,8 +21,10 @@ export const BrewsView = ({ userUID }) => {
 
   return (
     <>
-    <h2>Brews View</h2>
-    <Button type='button' onClick={handleNavBrewForm}>Add New Brew</Button>
+    <div className="view-div-style">      
+    <h2 className="view-header-style">Your Brews Live Here</h2>
+    <Button className="view-button-style" type='button' onClick={handleNavBrewForm}>Add New Brew</Button>
+    </div>
     {brews ? (
       <>
       {brews.map((brew) => (

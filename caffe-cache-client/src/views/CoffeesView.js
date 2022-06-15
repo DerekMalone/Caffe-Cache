@@ -21,8 +21,10 @@ export const CoffeesView = ({ userUID }) => {
 
   return (
     <>
-      <h2>Coffees View</h2>
-      <Button type='button' onClick={handleNavCoffeeForm}>Add New Coffee</Button>
+    <div className="view-div-style">      
+      <h2 className="view-header-style">Your Coffee Coffees Live Here</h2>
+      <Button className="view-button-style" type='button' onClick={handleNavCoffeeForm}>Add New Coffee</Button>
+    </div>
       {coffees ? (
         <>
         {coffees.map((coffee) => (
