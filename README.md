@@ -2,8 +2,10 @@
 Cafe Cache is an application designed to help coffee enthusiasts keep track of their coffee machines, beans, and brewing methods. The application provides a user-friendly interface for storing and organizing information about these three essential elements of a great cup of coffee. The user has full CRUD capabilities on all three major data sets using React.js for the client-side and ASP.NET with SQL database for the server-side.
 
 ## Get Started
-`git clone https://github.com/DerekMalone/Caffe-Cache.git
-cd Caffe-Cache`
+```
+git clone https://github.com/DerekMalone/Caffe-Cache.git
+cd Caffe-Cache
+```
 To run the code, paste the above git commands into your terminal. You will need to open an instance of Visual Studio. Select the "Open a project of solution" option. Navigate to the folder that the above git command cloned to. open the Caffe-Cache.sln file. You will need to go to the DBInit.sql file located in the SQL folder. Execute the DBInit.sql file "Ctl+Shift+E". Then "Start" the C# file by selecting the Start command or "F5".
 Once the Server-Side has been successfully started, in your terminal cd into the caffe-cache-client directory. If installed, use the `code .` command to open Visual Studio Code. You will then need to run `npm start` to launch the web application.
 
@@ -26,7 +28,8 @@ Once the Server-Side has been successfully started, in your terminal cd into the
 
 ## Code Snippet
 ### Server-Side: 
-` public IActionResult UpdateBrew(int id, [FromBody] Brew brewObj)
+``` 
+public IActionResult UpdateBrew(int id, [FromBody] Brew brewObj)
             {
                 try
                 {
@@ -38,10 +41,12 @@ Once the Server-Side has been successfully started, in your terminal cd into the
                 {
                     return NotFound();
                 }
-            }`
+            }
+```
 
 ### Client-Side:
-`const addBrew = (brewObj) => new Promise ((resolve, reject) => {
+```
+const addBrew = (brewObj) => new Promise ((resolve, reject) => {
     axios.post(`${dbUrl}/Brew`, brewObj)
     .then((response) => {
         if (response.status > 300 || response.status < 200) {
@@ -51,7 +56,8 @@ Once the Server-Side has been successfully started, in your terminal cd into the
         }
     })
     .catch(reject);
-})`
+})
+```
 
 ## Contributors
 - [Derek Malone](https://github.com/DerekMalone)
